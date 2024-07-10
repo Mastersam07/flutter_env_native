@@ -46,8 +46,9 @@ android {
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
 
-        buildConfigField "String", "APP_NAME", "\"${APP_NAME ?: 'default_api_key'}\""
-        buildConfigField "String", "APP_SUFFIX", "\"${APP_SUFFIX ?: 'https://default.url'}\""
+        resValue "string", "app_name", APP_NAME ?: 'default_name'
+
+        buildConfigField "String", "APP_NAME", "\"${APP_NAME ?: 'default_name'}\""
     }
 
     buildTypes {
