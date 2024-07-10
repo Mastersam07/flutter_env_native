@@ -1,13 +1,21 @@
 #!/bin/bash
 
+# Check if a root directory argument was provided
+if [ -z "$1" ]; then
+    echo "Error: Root directory argument is required."
+    exit 1
+fi
+
+ROOT_DIR=$1
+
 # Ensure the script is being run from the root of the Flutter project
-if [ ! -d "ios" ]; then
+if [ ! -d "$ROOT_DIR/ios" ]; then
     echo "Error: This script must be run from the root of your Flutter project."
     exit 1
 fi
 
 # Path to the Runner scheme file
-SCHEME_FILE="ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme"
+SCHEME_FILE="$ROOT_DIR/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme"
 
 if [ ! -f "$SCHEME_FILE" ]; then
     echo "Error: Runner.xcscheme file not found. Please ensure you have opened the iOS project in Xcode at least once."
@@ -53,7 +61,7 @@ fi
 
 # Add include statement to Debug.xcconfig and Release.xcconfig
 for CONFIG in Debug Release; do
-    CONFIG_FILE="ios/Flutter/${CONFIG}.xcconfig"
+    CONFIG_FILE="$ROOT_DIR/ios/Flutter/${CONFIG}.xcconfig"
     if [ -f "$CONFIG_FILE" ]; then
         if ! grep -q "#include \"Environment.xcconfig\"" "$CONFIG_FILE"; then
             echo "#include \"Environment.xcconfig\"" >> "$CONFIG_FILE"

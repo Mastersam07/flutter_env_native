@@ -128,6 +128,17 @@ class MainActivity: FlutterActivity(){
 
 ```diff
 +// some incoming step to add pre build action script
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+  end
+
++ flutter_env_plugin_path = File.join(Dir.pwd, '.symlinks', 'plugins', 'flutter_env', 'ios', 'setup_env.sh')
++ root_dir = File.expand_path('..', Dir.pwd)
+
++ # Run the setup_env.sh script from the plugin
++ system("sh #{flutter_env_plugin_path} #{root_dir}")
+end
 ```
 
 ### Usage in plist file
