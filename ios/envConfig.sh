@@ -21,22 +21,27 @@ if ! grep -q "entry_decode" "$SCHEME_FILE"; then
     # Backup the original file
     cp "$SCHEME_FILE" "$SCHEME_FILE.bak"
 
-    # Insert the PreActions block
+    # Insert the PreActions block after <BuildAction> tag
     awk '
-    /<\/TestAction>/ {
-        print "  <PreActions>"
-        print "    <ExecutionAction ActionType=\"Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction\">"
-        print "      <ActionContent title=\"Run Script\" scriptText=\"function entry_decode() { echo \\\"${*}\\\" | base64 --decode; } IFS=\",\" read -r -a define_items <<< \\\"$DART_DEFINES\\\"; for index in \\\"${!define_items[@]}\\\"; do define_items[$index]=$(entry_decode \\\"${define_items[$index]}\\\"); done; printf \\\"%s\\n\\\" \\\"${define_items[@]}\\\" > \\\"${SRCROOT}/Flutter/Environment.xcconfig\\\"\">"
-        print "      </ActionContent>"
-        print "      <buildableReference"
-        print "         BuildableIdentifier=\"primary\""
-        print "         BlueprintIdentifier=\"97C146ED1CF9000F007C117D\""
-        print "         BuildableName=\"Runner.app\""
-        print "         BlueprintName=\"Runner\""
-        print "         ReferencedContainer=\"container:Runner.xcodeproj\">"
-        print "      </buildableReference>"
-        print "    </ExecutionAction>"
-        print "  </PreActions>"
+    /<\/BuildAction>/ {
+        print "      <PreActions>"
+        print "         <ExecutionAction"
+        print "            ActionType = \"Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction\">"
+        print "            <ActionContent"
+        print "               title = \"Run Script\""
+        print "               scriptText = \"#!/bin/sh&#10;&#10;function entry_decode() { echo &quot;${*}&quot; | base64 --decode; }&#10;&#10;IFS=&apos;,&apos; read -r -a define_items &lt;&lt;&lt; &quot;$DART_DEFINES&quot;&#10;&#10;for index in &quot;${!define_items[@]}&quot;&#10;do&#10;    define_items[$index]=$(entry_decode &quot;${define_items[$index]}&quot;);&#10;done&#10;&#10;printf &quot;%s\\n&quot; &quot;${define_items[@]}&quot; &gt; ${SRCROOT}/Flutter/Environment.xcconfig&#10;\">"
+        print "               <EnvironmentBuildable>"
+        print "                  <BuildableReference"
+        print "                     BuildableIdentifier = \"primary\""
+        print "                     BlueprintIdentifier = \"\""
+        print "                     BuildableName = \"Runner.app\""
+        print "                     BlueprintName = \"Runner\""
+        print "                     ReferencedContainer = \"container:Runner.xcodeproj\">"
+        print "                  </BuildableReference>"
+        print "               </EnvironmentBuildable>"
+        print "            </ActionContent>"
+        print "         </ExecutionAction>"
+        print "      </PreActions>"
     }
     { print $0 }
     ' "$SCHEME_FILE.bak" > "$SCHEME_FILE"

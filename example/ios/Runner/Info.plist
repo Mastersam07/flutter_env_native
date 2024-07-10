@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>APP_NAME</key>
+	<string>$(APP_NAME)</string>
+	<key>APP_SUFFIX</key>
+	<string>$(APP_SUFFIX)</string>
 	<key>CFBundleDisplayName</key>
 	<string>$(APP_NAME)</string>
 	<key>CFBundleExecutable</key>

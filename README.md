@@ -14,6 +14,16 @@ dependencies:
 
 ## 🎮 Setup Guide
 
+## Define .env file
+
+```.env
+APP_NAME=batcave
+APP_SUFFIX=.dev
+MAPS_API_KEY=someKeyString
+```
+
+Pass .env file to flutter run/build via `--dart-define-from-file=.env`
+
 ## Android Installation
 
 ### :open_file_folder: `android/app/build.gradle`
@@ -107,4 +117,35 @@ class MainActivity: FlutterActivity(){
     }
 }
 
+```
+
+## iOS Installation
+
+### :open_file_folder: `ios/Podfile`
+
+:exclamation: __DO NOT OMIT ANY OF THE FOLLOWING CHANGES__ :exclamation:
+
+
+```diff
++// some incoming step to add pre build action script
+```
+
+### Usage in plist file
+
+##### :open_file_folder: `info.plist`:
+
+Reference the env variable directly as defined in the .env file
+
+```plist
+<key>CFBundleDisplayName</key>
+<string>$(APP_NAME)</string>
+```
+
+### Usage in swift file
+
+##### :open_file_folder: `AppDelegate.swift`: (any swift file of choice)
+
+```swift
+var app_name: String = Bundle.main.infoDictionary?["APP_NAME"] as? String ?? ""
+NSLog("\nHere's your app name -> \(app_name)")
 ```
