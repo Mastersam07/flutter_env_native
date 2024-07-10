@@ -22,19 +22,32 @@ if [ ! -d "$SCHEMES_DIR" ]; then
     exit 1
 fi
 
+# Function to extract the BlueprintIdentifier and BlueprintName from a scheme file
+extract_identifiers() {
+    local scheme_file="$1"
+    local buildable_identifier=$(xmllint --xpath 'string(//BuildableReference/@BuildableIdentifier)' "$scheme_file")
+    local blueprint_identifier=$(xmllint --xpath 'string(//BuildableReference/@BlueprintIdentifier)' "$scheme_file")
+    local blueprint_name=$(xmllint --xpath 'string(//BuildableReference/@BlueprintName)' "$scheme_file")
+    local buildable_name=$(xmllint --xpath 'string(//BuildableReference/@BuildableName)' "$scheme_file")
+    echo "$buildable_identifier,$blueprint_identifier,$blueprint_name,$buildable_name"
+}
+
 # Iterate over all .xcscheme files in the schemes directory
 for SCHEME_FILE in "$SCHEMES_DIR"/*.xcscheme; do
     echo "Processing scheme: $SCHEME_FILE"
 
+    identifiers=$(extract_identifiers "$SCHEME_FILE")
+    IFS=',' read -r buildable_identifier blueprint_identifier blueprint_name buildable_name <<< "$identifiers"
+
     # Add pre-actions build script to the Runner scheme
     if ! grep -q "entry_decode" "$SCHEME_FILE"; then
-        echo "Adding pre-actions build script to Runner scheme..."
+        echo "Adding pre-actions build script to scheme: $SCHEME_FILE"
 
         # Backup the original file
         cp "$SCHEME_FILE" "$SCHEME_FILE.bak"
 
-        # Insert the PreActions block after <BuildAction> tag
-        awk '
+        # Insert the PreActions block after </BuildAction> tag
+        awk -v buildable_identifier="$buildable_identifier" -v blueprint_identifier="$blueprint_identifier" -v blueprint_name="$blueprint_name" -v buildable_name="$buildable_name" '
         /<\/BuildAction>/ {
             print "      <PreActions>"
             print "         <ExecutionAction"
@@ -44,10 +57,10 @@ for SCHEME_FILE in "$SCHEMES_DIR"/*.xcscheme; do
             print "               scriptText = \"#!/bin/sh&#10;&#10;function entry_decode() { echo &quot;${*}&quot; | base64 --decode; }&#10;&#10;IFS=&apos;,&apos; read -r -a define_items &lt;&lt;&lt; &quot;$DART_DEFINES&quot;&#10;&#10;for index in &quot;${!define_items[@]}&quot;&#10;do&#10;    define_items[$index]=$(entry_decode &quot;${define_items[$index]}&quot;);&#10;done&#10;&#10;printf &quot;%s\\n&quot; &quot;${define_items[@]}&quot; &gt; ${SRCROOT}/Flutter/Environment.xcconfig&#10;\">"
             print "               <EnvironmentBuildable>"
             print "                  <BuildableReference"
-            print "                     BuildableIdentifier = \"primary\""
-            print "                     BlueprintIdentifier = \"\""
-            print "                     BuildableName = \"Runner.app\""
-            print "                     BlueprintName = \"Runner\""
+            print "                     BuildableIdentifier = \"" buildable_identifier "\""
+            print "                     BlueprintIdentifier = \"" blueprint_identifier "\""
+            print "                     BuildableName = \"" buildable_name "\""
+            print "                     BlueprintName = \"" blueprint_name "\""
             print "                     ReferencedContainer = \"container:Runner.xcodeproj\">"
             print "                  </BuildableReference>"
             print "               </EnvironmentBuildable>"
