@@ -1,28 +1,46 @@
 #!/bin/bash
 
+# Ensure the script is being run from the root of the Flutter project
+if [ ! -d "ios" ]; then
+    echo "Error: This script must be run from the root of your Flutter project."
+    exit 1
+fi
+
 # Path to the Runner scheme file
 SCHEME_FILE="ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme"
 
 if [ ! -f "$SCHEME_FILE" ]; then
-    echo "Error: Runner.xcscheme file not found. Please run this script from the root of your Flutter project."
+    echo "Error: Runner.xcscheme file not found. Please ensure you have opened the iOS project in Xcode at least once."
     exit 1
 fi
 
 # Add pre-actions build script to the Runner scheme
 if ! grep -q "entry_decode" "$SCHEME_FILE"; then
     echo "Adding pre-actions build script to Runner scheme..."
-    /usr/libexec/PlistBuddy -c "Add :PreActions array" "$SCHEME_FILE"
-    /usr/libexec/PlistBuddy -c "Add :PreActions:0 dict" "$SCHEME_FILE"
-    /usr/libexec/PlistBuddy -c "Add :PreActions:0:ActionContent dict" "$SCHEME_FILE"
-    /usr/libexec/PlistBuddy -c "Add :PreActions:0:ActionContent:scriptText string" "$SCHEME_FILE"
-    /usr/libexec/PlistBuddy -c "Set :PreActions:0:ActionContent:scriptText \"function entry_decode() { echo \\\"\${*}\\\" | base64 --decode; } IFS=',' read -r -a define_items <<< \\\"\$DART_DEFINES\\\"; for index in \\\"\\\${!define_items[@]}\\\"; do define_items[\\\$index]=\\\$(entry_decode \\\"\\\${define_items[\\\$index]}\\\"); done; printf \\\"%s\\n\\\" \\\"\${define_items[@]}\\\" > \\\"\${SRCROOT}/Flutter/Environment.xcconfig\\\"\"" "$SCHEME_FILE"
-    /usr/libexec/PlistBuddy -c "Add :PreActions:0:ActionContent:title string \"Run Script\"" "$SCHEME_FILE"
-    /usr/libexec/PlistBuddy -c "Add :PreActions:0:buildableReference dict" "$SCHEME_FILE"
-    /usr/libexec/PlistBuddy -c "Add :PreActions:0:buildableReference:BuildableIdentifier string \"primary\"" "$SCHEME_FILE"
-    /usr/libexec/PlistBuddy -c "Add :PreActions:0:buildableReference:BlueprintIdentifier string \"\"" "$SCHEME_FILE"
-    /usr/libexec/PlistBuddy -c "Add :PreActions:0:buildableReference:BuildableName string \"Runner.app\"" "$SCHEME_FILE"
-    /usr/libexec/PlistBuddy -c "Add :PreActions:0:buildableReference:BlueprintName string \"Runner\"" "$SCHEME_FILE"
-    /usr/libexec/PlistBuddy -c "Add :PreActions:0:buildableReference:ReferencedContainer string \"container:Runner.xcodeproj\"" "$SCHEME_FILE"
+
+    # Backup the original file
+    cp "$SCHEME_FILE" "$SCHEME_FILE.bak"
+
+    # Insert the PreActions block
+    awk '
+    /<\/TestAction>/ {
+        print "  <PreActions>"
+        print "    <ExecutionAction ActionType=\"Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction\">"
+        print "      <ActionContent title=\"Run Script\" scriptText=\"function entry_decode() { echo \\\"${*}\\\" | base64 --decode; } IFS=\",\" read -r -a define_items <<< \\\"$DART_DEFINES\\\"; for index in \\\"${!define_items[@]}\\\"; do define_items[$index]=$(entry_decode \\\"${define_items[$index]}\\\"); done; printf \\\"%s\\n\\\" \\\"${define_items[@]}\\\" > \\\"${SRCROOT}/Flutter/Environment.xcconfig\\\"\">"
+        print "      </ActionContent>"
+        print "      <buildableReference"
+        print "         BuildableIdentifier=\"primary\""
+        print "         BlueprintIdentifier=\"97C146ED1CF9000F007C117D\""
+        print "         BuildableName=\"Runner.app\""
+        print "         BlueprintName=\"Runner\""
+        print "         ReferencedContainer=\"container:Runner.xcodeproj\">"
+        print "      </buildableReference>"
+        print "    </ExecutionAction>"
+        print "  </PreActions>"
+    }
+    { print $0 }
+    ' "$SCHEME_FILE.bak" > "$SCHEME_FILE"
+
     echo "Pre-actions build script added successfully."
 else
     echo "Pre-actions build script already exists in Runner scheme."
@@ -42,13 +60,5 @@ for CONFIG in Debug Release; do
         echo "Error: $CONFIG_FILE not found."
     fi
 done
-
-# Add Environment.xcconfig to .gitignore
-if ! grep -q "ios/Flutter/Environment.xcconfig" .gitignore; then
-    echo "ios/Flutter/Environment.xcconfig" >> .gitignore
-    echo "Added Environment.xcconfig to .gitignore."
-else
-    echo "Environment.xcconfig already exists in .gitignore."
-fi
 
 echo "iOS environment setup completed."
