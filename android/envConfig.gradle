@@ -1,0 +1,13 @@
+def envConfig = [:]
+if (project.hasProperty('dart-defines')) {
+    envConfig = project.property('dart-defines')
+        .split(',')
+        .collectEntries { entry ->
+            def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
+            [(pair.first()): pair.last()]
+        }
+    // Set the environment variables as project extra properties
+    envConfig.each { key, value ->
+        rootProject.ext[key] = value
+    }
+}
