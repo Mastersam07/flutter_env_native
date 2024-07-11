@@ -4,6 +4,10 @@ version: 0.0.1
 homepage: https://github.com/Mastersam07/flutter_env
 repository: https://github.com/Mastersam07/flutter_env
 issue_tracker: https://github.com/Mastersam07/flutter_env/issues
+topics:
+  - dotenv
+  - environment-variables
+  - env
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

@@ -8,10 +8,7 @@ A plugin/utility that provides compile-time variables for native platform.
 
 ```yaml
 dev_dependencies:
-  flutter_env:
-    git:
-      url: git@github.com:mastersam07/flutter_env.git
-      ref: dev
+  flutter_env: ^0.0.1
 ```
 
 ## 🎮 Setup Guide
@@ -111,11 +108,11 @@ class MainActivity: FlutterActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-+        // Access BuildConfig values
+         // Access BuildConfig values
 +        val appName = BuildConfig.APP_NAME
 
-+        // Sample usage to display a toast message
-+        Toast.makeText(this, "APP_NAME: $appName", Toast.LENGTH_LONG).show()
+         // Sample usage to display a toast message
+         Toast.makeText(this, "APP_NAME: $appName", Toast.LENGTH_LONG).show()
     }
 }
 
@@ -129,7 +126,6 @@ class MainActivity: FlutterActivity(){
 
 
 ```diff
-+// some incoming step to add pre build action script
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
@@ -158,7 +154,7 @@ Reference the env variable directly as defined in the .env file
 
 ##### :open_file_folder: `AppDelegate.swift`: (any swift file of choice)
 
-```swift
-var app_name: String = Bundle.main.infoDictionary?["APP_NAME"] as? String ?? ""
-NSLog("\nHere's your app name -> \(app_name)")
+```diff
++ var app_name: String = Bundle.main.infoDictionary?["APP_NAME"] as? String ?? ""
+  NSLog("\nHere's your app name -> \(app_name)")
 ```
