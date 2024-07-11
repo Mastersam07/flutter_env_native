@@ -1,5 +1,5 @@
 ## 0.0.1
-* Initial release of flutter_env plugin.
+* Initial release of flutter_env_native plugin.
 * Support multiple Xcode schemes.
 * Extract and inserts necessary identifiers from Xcode scheme files dynamically.
 * Automatically ignore Environment.xcconfig file.

@@ -1,4 +1,4 @@
-package tech.mastersam.flutter_env
+package tech.mastersam.flutter_env_native
 
 import androidx.annotation.NonNull
 

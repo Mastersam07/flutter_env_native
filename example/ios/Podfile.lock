@@ -1,21 +1,21 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_env (0.0.1):
+  - flutter_env_native (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - flutter_env (from `.symlinks/plugins/flutter_env/ios`)
+  - flutter_env_native (from `.symlinks/plugins/flutter_env_native/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  flutter_env:
-    :path: ".symlinks/plugins/flutter_env/ios"
+  flutter_env_native:
+    :path: ".symlinks/plugins/flutter_env_native/ios"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_env: 7e0fdd18628cfac8222af52386882356feaa3c49
+  flutter_env_native: 7e0fdd18628cfac8222af52386882356feaa3c49
 
 PODFILE CHECKSUM: d5f9499f5a9e1c12b8ed9d9af8267c8666b6345c
 

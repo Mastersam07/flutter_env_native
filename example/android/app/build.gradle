@@ -23,8 +23,8 @@ if (flutterVersionName == null) {
     flutterVersionName = "1.0"
 }
 
-Project flutter_env = project(':flutter_env')
-apply from: "${flutter_env.projectDir}/envConfig.gradle"
+Project flutter_env_native = project(':flutter_env_native')
+apply from: "${flutter_env_native.projectDir}/envConfig.gradle"
 
 android {
     namespace = "tech.mastersam.flutter_env_example"

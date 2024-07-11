@@ -1,9 +1,9 @@
-name: flutter_env
+name: flutter_env_native
 description: "A plugin/utility that provides compile-time variables for native platforms."
 version: 0.0.1
-homepage: https://github.com/Mastersam07/flutter_env
-repository: https://github.com/Mastersam07/flutter_env
-issue_tracker: https://github.com/Mastersam07/flutter_env/issues
+homepage: https://github.com/Mastersam07/flutter_env_native
+repository: https://github.com/Mastersam07/flutter_env_native
+issue_tracker: https://github.com/Mastersam07/flutter_env_native/issues
 topics:
   - dotenv
   - environment-variables
@@ -21,7 +21,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: tech.mastersam.flutter_env
+        package: tech.mastersam.flutter_env_native
         pluginClass: FlutterEnvPlugin
       ios:
         pluginClass: FlutterEnvPlugin

@@ -1,6 +1,6 @@
 # flutter_env_example
 
-Demonstrates how to use the flutter_env plugin.
+Demonstrates how to use the flutter_env_native plugin.
 
 ## Getting Started
 

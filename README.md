@@ -1,4 +1,4 @@
-# flutter_env
+# flutter_env_native
 
 A plugin/utility that provides compile-time variables for native platform.
 
@@ -8,7 +8,7 @@ A plugin/utility that provides compile-time variables for native platform.
 
 ```yaml
 dev_dependencies:
-  flutter_env: ^0.0.1
+  flutter_env_native: ^0.0.1
 ```
 
 ## 🎮 Setup Guide
@@ -31,9 +31,9 @@ Pass .env file to flutter run/build via `--dart-define-from-file=.env`
 
 
 ```diff
-// flutter_env
-+Project flutter_env = project(':flutter_env')
-+apply from: "${flutter_env.projectDir}/envConfig.gradle"
+// flutter_env_native
++Project flutter_env_native = project(':flutter_env_native')
++apply from: "${flutter_env_native.projectDir}/envConfig.gradle"
 ```
 
 ### Usage in android manifest file
@@ -131,7 +131,7 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
   end
 
-+ flutter_env_plugin_path = File.join(Dir.pwd, '.symlinks', 'plugins', 'flutter_env', 'ios', 'setup_env.sh')
++ flutter_env_plugin_path = File.join(Dir.pwd, '.symlinks', 'plugins', 'flutter_env_native', 'ios', 'setup_env.sh')
 + root_dir = File.expand_path('..', Dir.pwd)
 
 + # Run the setup_env.sh script from the plugin

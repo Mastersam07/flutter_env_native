@@ -42,8 +42,8 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
   end
 
-  # Find the path to the flutter_env plugin
-  flutter_env_plugin_path = File.join(Dir.pwd, '.symlinks', 'plugins', 'flutter_env', 'ios', 'setup_env.sh')
+  # Find the path to the flutter_env_native plugin
+  flutter_env_plugin_path = File.join(Dir.pwd, '.symlinks', 'plugins', 'flutter_env_native', 'ios', 'setup_env.sh')
   root_dir = File.expand_path('..', Dir.pwd)
 
   # Run the setup_env.sh script from the plugin

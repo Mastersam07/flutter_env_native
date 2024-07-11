@@ -62,7 +62,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_env:
+  flutter_env_native:
     dependency: "direct dev"
     description:
       path: ".."
