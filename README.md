@@ -1,6 +1,8 @@
 # flutter_env
 
-A flutter plugin/utility that allows reading of `--dart-define` env variable natively
+A plugin/utility that provides compile-time variables for native platform.
+
+> This plugin/utility makes env variables set in `--dart-define` and `--dart-define-from-file` available to the native platforms.
 
 ## 🎖 Installing
 
