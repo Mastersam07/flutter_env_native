@@ -5,7 +5,7 @@ A flutter plugin/utility that allows reading of `--dart-define` env variable nat
 ## 🎖 Installing
 
 ```yaml
-dependencies:
+dev_dependencies:
   flutter_env:
     git:
       url: git@github.com:mastersam07/flutter_env.git

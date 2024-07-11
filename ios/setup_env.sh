@@ -92,4 +92,17 @@ for CONFIG in Debug Release; do
     fi
 done
 
+# Add Environment.xcconfig to .gitignore in the ios folder
+IOS_GITIGNORE="$ROOT_DIR/ios/.gitignore"
+if [ -f "$IOS_GITIGNORE" ]; then
+    if ! grep -q "Flutter/Environment.xcconfig" "$IOS_GITIGNORE"; then
+        echo "Flutter/Environment.xcconfig" >> "$IOS_GITIGNORE"
+        echo "Added Environment.xcconfig to .gitignore in ios folder."
+    else
+        echo "Environment.xcconfig already exists in .gitignore in ios folder."
+    fi
+else
+    echo "Error: .gitignore file not found in ios folder."
+fi
+
 echo "iOS environment setup completed."
