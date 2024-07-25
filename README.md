@@ -135,7 +135,7 @@ post_install do |installer|
 + root_dir = File.expand_path('..', Dir.pwd)
 
 + # Run the setup_env.sh script from the plugin
-+ system("sh #{flutter_env_plugin_path} #{root_dir}")
++ system("sh \"#{flutter_env_plugin_path}\" \"#{root_dir}\"")
 end
 ```
 

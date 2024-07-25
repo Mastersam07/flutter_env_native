@@ -6,7 +6,7 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-ROOT_DIR=$1
+ROOT_DIR="$1"
 
 # Ensure the script is being run from the root of the Flutter project
 if [ ! -d "$ROOT_DIR/ios" ]; then

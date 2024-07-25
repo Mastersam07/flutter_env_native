@@ -1,6 +1,6 @@
 name: flutter_env_native
 description: "A plugin/utility that provides compile-time variables for native platforms."
-version: 0.0.1
+version: 0.1.0
 homepage: https://github.com/Mastersam07/flutter_env_native
 repository: https://github.com/Mastersam07/flutter_env_native
 issue_tracker: https://github.com/Mastersam07/flutter_env_native/issues

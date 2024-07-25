@@ -1,3 +1,9 @@
+## 0.1.0
+* Fix: handle spaces in project directory paths for iOS setup
+> - Updated setup_env.sh script to correctly handle spaces in directory paths by quoting all path references.
+> - Modified Podfile to use bash and properly escape paths when calling setup_env.sh.
+> - Ensured all paths are correctly quoted in both setup_env.sh and Podfile.
+
 ## 0.0.1
 * Initial release of flutter_env_native plugin.
 * Support multiple Xcode schemes.
