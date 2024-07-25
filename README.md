@@ -1,5 +1,7 @@
 # flutter_env_native
 
+[![pub package](https://img.shields.io/pub/v/flutter_env_native.svg?color=success&style=flat-square)](https://pub.dartlang.org/packages/flutter_env_native)
+
 A plugin/utility that provides compile-time variables for native platform.
 
 > This plugin/utility makes env variables set in `--dart-define` and `--dart-define-from-file` available to the native platforms.
@@ -8,7 +10,7 @@ A plugin/utility that provides compile-time variables for native platform.
 
 ```yaml
 dev_dependencies:
-  flutter_env_native: ^0.0.1
+  flutter_env_native: ^0.1.0
 ```
 
 ## 🎮 Setup Guide
