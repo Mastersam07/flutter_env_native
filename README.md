@@ -25,6 +25,9 @@ MAPS_API_KEY=someKeyString
 
 Pass .env file to flutter run/build via `--dart-define-from-file=.env`
 
+> [!WARNING]
+> In **iOS \*.xcconfig** has some limitations when it comes to variable values it treats the sequence // as a comment delimiter. This means that you won’t be able to specify API_URL for example, https://example.com since everything after // will be ignored. Read about the solution [here](https://nshipster.com/xcconfig/#managing-constants-across-different-environments).
+
 ## Android Installation
 
 ### :open_file_folder: `android/app/build.gradle`
@@ -160,3 +163,6 @@ Reference the env variable directly as defined in the .env file
 + var app_name: String = Bundle.main.infoDictionary?["APP_NAME"] as? String ?? ""
   NSLog("\nHere's your app name -> \(app_name)")
 ```
+
+> [!NOTE]
+> Don't forget the **env variable** added in `info.plist` so you can access it in the **swift file.**
