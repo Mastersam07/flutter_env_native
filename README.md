@@ -26,7 +26,7 @@ MAPS_API_KEY=someKeyString
 Pass .env file to flutter run/build via `--dart-define-from-file=.env`
 
 > [!WARNING]
-> In **iOS \*.xcconfig** has some limitations when it comes to variable values it treats the sequence // as a comment delimiter. This means that you won’t be able to specify API_URL for example, https://example.com since everything after // will be ignored. Read about the solution [here](https://nshipster.com/xcconfig/#managing-constants-across-different-environments).
+> In **iOS \*.xcconfig** has some limitations when it comes to variable values it treats the sequence **//** as a **comment delimiter**, then for example, `https://example.com`, will be `https://` in the code, everything after **//** will be ignored. For solve omit the `https://` while specifying the env variable and prepend the `https://`  in code, read more about the solution [here](https://nshipster.com/xcconfig/#managing-constants-across-different-environments).
 
 ## Android Installation
 
