@@ -10,7 +10,7 @@ A plugin/utility that provides compile-time variables for native platform.
 
 ```yaml
 dev_dependencies:
-  flutter_env_native: ^0.1.0
+  flutter_env_native: ^0.2.0
 ```
 
 ## 🎮 Setup Guide
