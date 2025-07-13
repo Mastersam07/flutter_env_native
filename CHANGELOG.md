@@ -1,3 +1,6 @@
+## 0.2.0
+* Fix: ignore flutter-internal variables when creating Environment.xcconfig
+
 ## 0.1.0
 * Fix: handle spaces in project directory paths for iOS setup
 > - Updated setup_env.sh script to correctly handle spaces in directory paths by quoting all path references.
