@@ -3,7 +3,7 @@ if (project.hasProperty('dart-defines')) {
     envConfig = project.property('dart-defines')
         .split(',')
         .collectEntries { entry ->
-            def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
+            def pair = new String(entry.decodeBase64(), 'UTF-8').split('=', 2)
             [(pair.first()): pair.last()]
         }
     // Set the environment variables as project extra properties
